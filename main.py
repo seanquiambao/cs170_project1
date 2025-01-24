@@ -1,16 +1,42 @@
-# This is a sample Python script.
-
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def main(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+easy = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
+medium = [[0, 1, 2], [4, 5, 3], [7, 8, 6]]
+hard = [[8, 7, 1], [6, 0, 2], [5, 4, 3]]
+goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
 
 
-# Press the green button in the gutter to run the script.
+def print_puzzle(puzzle):
+    for i in range(0, 3):
+        print(puzzle[i])
+
+
+def read_choice():
+    while True:
+        choice = input("Select your choice: ")
+        if choice.isdigit():
+            return int(choice)
+        print("Not a numerical value, try again.")
+
+
+def main():
+
+    print("Select Difficulty:")
+    print("1. Easy (default)")
+    print("2. Medium")
+    print("3. Hard")
+    print("4 <. Quit Program")
+
+    match read_choice():
+        case 1:
+            print("HI?")
+            print_puzzle(easy)
+        case 2:
+            print_puzzle(medium)
+        case 3:
+            print_puzzle(hard)
+        case _:
+            print("Quitting!")
+            return
+
+
 if __name__ == '__main__':
-    main('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    main()
