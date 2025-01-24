@@ -12,9 +12,26 @@ def print_puzzle(puzzle):
 def read_choice():
     while True:
         choice = input("Select your choice: ")
-        if choice.isdigit():
+        try:
             return int(choice)
-        print("Not a numerical value, try again.")
+        except ValueError:
+            print("Not a numerical value, try again.")
+
+
+def uniform_search(puzzle):
+    print_puzzle(puzzle)
+
+
+def select_algorithm(puzzle):
+    print("Select Algorithm:")
+    print("1. Uniform Search Cost")
+    print("2. A* with the Misplaced Tile Heuristic")
+    print("3. A* with the Manhattan Distance Heuristic")
+    match read_choice():
+        case 1:
+            uniform_search(puzzle)
+        case _:
+            return
 
 
 def main():
@@ -27,12 +44,11 @@ def main():
 
     match read_choice():
         case 1:
-            print("HI?")
-            print_puzzle(easy)
+            select_algorithm(easy)
         case 2:
-            print_puzzle(medium)
+            select_algorithm(medium)
         case 3:
-            print_puzzle(hard)
+            select_algorithm(hard)
         case _:
             print("Quitting!")
             return
