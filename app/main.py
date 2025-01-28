@@ -1,3 +1,5 @@
+from queue import Queue
+
 from tree_node import TreeNode
 import queue
 import copy
@@ -25,17 +27,18 @@ def in_bounds(x, y):
 
 
 # queues all puzzle combination, basically swaps empty square in four different directions
-def queueing_fn(node, nodes):
+def queueing_fn(node, nodes: Queue):
 
     zero_x = node.get_zero_pos()[0]
     zero_y = node.get_zero_pos()[1]
 
     for direction in directions:
-        # for each direction
+        # for each direction, check if the swapping position is in bounds
         x = zero_x + direction[0]
         y = zero_y + direction[1]
 
         if in_bounds(x, y):
+            # if it is, make a deep copy and push it to queue
             queue_node = copy.deepcopy(
                 Puzzle(node.get_puzzle(), goal, [zero_x, zero_y]))
             queue_node.swap_squares(x, y)
@@ -46,9 +49,18 @@ def uniform_cost_search(puzzle: Puzzle):
     puzzle.print_puzzle()
 
 
+def a_star_missing_tiles(puzzle: Puzzle):
+    puzzle.print_puzzle()
+
+
+def a_star_manhattan_distance(puzzle: Puzzle):
+    puzzle.print_puzzle()
+
+
 def general_search(puzzle: Puzzle):
     nodes = queue.Queue()
     nodes.put(puzzle)
+    num_nodes_expanded = 0
     repeats = []
 
     while not nodes.empty():
@@ -56,9 +68,11 @@ def general_search(puzzle: Puzzle):
         if node.get_puzzle() in repeats:
             continue
         repeats.append(node.get_puzzle())
+        num_nodes_expanded += 1
 
         if node.is_solved():
             print("Solved!")
+            print("Number of nodes expanded:", num_nodes_expanded)
             node.print_puzzle()
             return
         queueing_fn(node, nodes)
@@ -78,6 +92,10 @@ def select_algorithm(puzzle: Puzzle):
             general_search(puzzle)
         case 2:
             uniform_cost_search(puzzle)
+        case 3:
+            a_star_missing_tiles(puzzle)
+        case 4:
+            a_star_manhattan_distance(puzzle)
         case _:
             return
 
