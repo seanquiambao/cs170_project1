@@ -42,7 +42,7 @@ def queueing_fn(node, nodes):
             nodes.put(queue_node)
 
 
-def uniform_search(puzzle):
+def uniform_cost_search(puzzle: Puzzle):
     puzzle.print_puzzle()
 
 
@@ -69,12 +69,15 @@ def general_search(puzzle: Puzzle):
 
 def select_algorithm(puzzle: Puzzle):
     print("Select Algorithm:")
-    print("1. Uniform Search Cost")
-    print("2. A* with the Misplaced Tile Heuristic")
-    print("3. A* with the Manhattan Distance Heuristic")
+    print("1. General Search")
+    print("2. Uniform Search Cost")
+    print("3. A* with the Misplaced Tile Heuristic")
+    print("4. A* with the Manhattan Distance Heuristic")
     match read_choice():
         case 1:
             general_search(puzzle)
+        case 2:
+            uniform_cost_search(puzzle)
         case _:
             return
 
