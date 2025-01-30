@@ -1,8 +1,5 @@
-from queue import Queue
-
 from tree_node import TreeNode
 import heapq
-import queue
 import copy
 from puzzle import Puzzle
 
@@ -11,8 +8,6 @@ medium = [[0, 1, 2], [4, 5, 3], [7, 8, 6]]
 hard = [[8, 7, 1], [6, 0, 2], [5, 4, 3]]
 
 directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-
-global_order = 0
 
 
 def read_choice():
@@ -77,18 +72,18 @@ def general_search(puzzle: Puzzle, algorithm: str):
         num_nodes_expanded += 1
 
         if node_puzzle.is_solved():
-            print("Solved with", algorithm, "search algorithm")
+            print("\nSolved with", algorithm, "algorithm")
             print("Num Nodes Expanded", num_nodes_expanded)
             node_puzzle.print_puzzle()
             return
         queueing_fn_heuristic(node, nodes, algorithm)
 
-    print("Unsolvable")
+    print("\nUnsolvable")
     puzzle.print_puzzle()
 
 
 def select_algorithm(puzzle: Puzzle):
-    print("Select Algorithm:")
+    print("\nSelect Algorithm:")
     print("1. Uniform Search Cost")
     print("2. A* with the Misplaced Tile Heuristic")
     print("3. A* with the Manhattan Distance Heuristic")
