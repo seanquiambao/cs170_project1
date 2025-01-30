@@ -23,17 +23,19 @@ def in_bounds(x, y):
     return 0 <= x < 3 and 0 <= y < 3
 
 
-def queueing_fn_heuristic(node, nodes, algorithm):
+def queueing_fn(node, nodes, algorithm):
     heuristic_val = 0
     node_puzzle = node.value
     zero_x = node_puzzle.get_zero_pos()[0]
     zero_y = node_puzzle.get_zero_pos()[1]
 
+    # There are four direction we can move the 0 tile: up, down, left, and right
     for direction in directions:
 
         x = zero_x + direction[0]
         y = zero_y + direction[1]
 
+        # Checks if swapping position is in-bounds
         if not in_bounds(x, y):
             continue
 
@@ -52,6 +54,8 @@ def queueing_fn_heuristic(node, nodes, algorithm):
 
 def general_search(puzzle: Puzzle, algorithm: str):
     nodes = []
+
+    # Adding in the initial puzzle to the queue, taking into account of heuristics.
     if algorithm == "misplaced":
         heapq.heappush(nodes,
                        TreeNode(puzzle, puzzle.calculate_misplaced_tiles(), 0))
@@ -66,18 +70,24 @@ def general_search(puzzle: Puzzle, algorithm: str):
     while not len(nodes) == 0:
         node = heapq.heappop(nodes)
         node_puzzle = node.value
+
+        # If puzzle is repeated before, skip it.
         if node_puzzle.get_puzzle() in repeats:
             continue
         repeats.append(node_puzzle.get_puzzle())
         num_nodes_expanded += 1
 
+        # Solved case
         if node_puzzle.is_solved():
             print("\nSolved with", algorithm, "algorithm")
             print("Num Nodes Expanded", num_nodes_expanded)
             node_puzzle.print_puzzle()
             return
-        queueing_fn_heuristic(node, nodes, algorithm)
 
+        # If puzzle is not solved, then try queueing some puzzles.
+        queueing_fn(node, nodes, algorithm)
+
+    # If len(nodes) == 0 (meaning queue is empty), then the puzzle is unsolvable.
     print("\nUnsolvable")
     puzzle.print_puzzle()
 
