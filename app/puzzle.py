@@ -1,8 +1,12 @@
 class Puzzle:
 
-    def __init__(self, puzzle, goal, zero_pos):
+    goal = [[1, 2, 3], [4, 5, 6], [7, 8, 0]]
+
+    goal_pos = [[0, 0], [0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0],
+                [2, 1], [2, 2]]
+
+    def __init__(self, puzzle, zero_pos):
         self.puzzle = puzzle
-        self.goal = goal
         self.zero_pos = zero_pos
 
     def get_puzzle(self):
@@ -32,3 +36,26 @@ class Puzzle:
         self.puzzle[z_x][z_y], self.puzzle[i][j] = self.puzzle[i][
             j], self.puzzle[z_x][z_y]
         self.set_zero_pos([i, j])
+
+    def calculate_misplaced_tiles(self):
+        count = 0
+        for i in range(0, 3):
+            for j in range(0, 3):
+                if self.puzzle[i][j] == 0:
+                    continue
+                if self.puzzle[i][j] != self.goal[i][j]:
+                    count += 1
+
+        return count
+
+    def calculate_manhattan_distance(self):
+        manhattan_sum = 0
+        for i in range(0, 3):
+            for j in range(0, 3):
+                val = self.puzzle[i][j]
+                if val == 0:
+                    continue
+
+                manhattan_sum += abs(i - self.goal_pos[val][0]) + abs(
+                    j - self.goal_pos[val][1])
+        return manhattan_sum
