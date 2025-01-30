@@ -28,25 +28,6 @@ def in_bounds(x, y):
     return 0 <= x < 3 and 0 <= y < 3
 
 
-# queues all puzzle combination, basically swaps empty square in four different directions
-def queueing_fn(node, nodes: Queue):
-
-    zero_x = node.get_zero_pos()[0]
-    zero_y = node.get_zero_pos()[1]
-
-    for direction in directions:
-        # for each direction, check if the swapping position is in bounds
-        x = zero_x + direction[0]
-        y = zero_y + direction[1]
-
-        if in_bounds(x, y):
-            # if it is, make a deep copy and push it to queue
-            queue_node = copy.deepcopy(
-                Puzzle(node.get_puzzle(), [zero_x, zero_y]))
-            queue_node.swap_squares(x, y)
-            nodes.put(queue_node)
-
-
 def queueing_fn_heuristic(node, nodes, algorithm):
     heuristic_val = 0
     node_puzzle = node.value
