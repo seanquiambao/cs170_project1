@@ -80,7 +80,8 @@ def general_search(puzzle: Puzzle, algorithm: str):
         # Solved case
         if node_puzzle.is_solved():
             print("\nSolved with", algorithm, "algorithm")
-            print("Num Nodes Expanded", num_nodes_expanded)
+            print("Num Nodes Expanded:", num_nodes_expanded)
+            print("Depth Solution:", node.depth)
             node_puzzle.print_puzzle()
             return
 
