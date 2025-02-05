@@ -112,13 +112,36 @@ def select_algorithm(puzzle: Puzzle):
             return
 
 
+def create_puzzle():
+    zero_pos = [-1, -1]
+    user_puzzle = []
+    for i in range(3):
+        numbers = ""
+        while True:
+            numbers = input(f"Type in 3 numbers for row {i}: ")
+            numbers = numbers.split()
+            if len(numbers) == 3:
+                break
+            print("Not 3 numbers! Try again.")
+
+        numbers = [int(x) for x in numbers]
+
+        if 0 in numbers:
+            zero_pos = [i, numbers.index(0)]
+
+        user_puzzle.append(numbers)
+
+    return Puzzle(user_puzzle, zero_pos)
+
+
 def main():
 
     print("Select Difficulty:")
     print("1. Easy (default)")
     print("2. Medium")
     print("3. Hard")
-    print("4 <. Quit Program")
+    print("4. Custom")
+    print("5 <. Quit Program")
 
     match read_choice():
         case 1:
@@ -129,6 +152,9 @@ def main():
             select_algorithm(puzzle)
         case 3:
             puzzle = Puzzle(hard, [1, 1])
+            select_algorithm(puzzle)
+        case 4:
+            puzzle = create_puzzle()
             select_algorithm(puzzle)
         case _:
             print("Quitting!")
