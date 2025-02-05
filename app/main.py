@@ -2,6 +2,7 @@ from tree_node import TreeNode
 import heapq
 import copy
 from puzzle import Puzzle
+import time
 
 easy = [[1, 2, 0], [4, 5, 3], [7, 8, 6]]
 medium = [[0, 1, 2], [4, 5, 3], [7, 8, 6]]
@@ -53,6 +54,7 @@ def queueing_fn(node, nodes, algorithm):
 
 
 def general_search(puzzle: Puzzle, algorithm: str):
+    start = time.time()
     nodes = []
     max_queue_size = 0
 
@@ -78,13 +80,19 @@ def general_search(puzzle: Puzzle, algorithm: str):
             continue
         repeats.append(node_puzzle.get_puzzle())
         num_nodes_expanded += 1
+        print(
+            f"Best move where g(n) = {node.depth}, and h(n) = {node.heuristic}"
+        )
+        node_puzzle.print_puzzle()
 
         # Solved case
         if node_puzzle.is_solved():
+            end = time.time()
             print("\nSolved with", algorithm, "algorithm")
             print("Num Nodes Expanded:", num_nodes_expanded)
             print("Max Heap Size:", max_queue_size)
             print("Depth Solution:", node.depth)
+            print(f"Time: {round(end - start, 2)} seconds")
             node_puzzle.print_puzzle()
             return
 
