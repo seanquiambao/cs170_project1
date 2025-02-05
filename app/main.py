@@ -54,6 +54,7 @@ def queueing_fn(node, nodes, algorithm):
 
 def general_search(puzzle: Puzzle, algorithm: str):
     nodes = []
+    max_queue_size = 0
 
     # Adding in the initial puzzle to the queue, taking into account of heuristics.
     if algorithm == "misplaced":
@@ -68,6 +69,7 @@ def general_search(puzzle: Puzzle, algorithm: str):
     repeats = []
 
     while not len(nodes) == 0:
+        max_queue_size = max(max_queue_size, len(nodes))
         node = heapq.heappop(nodes)
         node_puzzle = node.value
 
@@ -81,6 +83,7 @@ def general_search(puzzle: Puzzle, algorithm: str):
         if node_puzzle.is_solved():
             print("\nSolved with", algorithm, "algorithm")
             print("Num Nodes Expanded:", num_nodes_expanded)
+            print("Max Heap Size:", max_queue_size)
             print("Depth Solution:", node.depth)
             node_puzzle.print_puzzle()
             return
